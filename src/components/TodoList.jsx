@@ -11,7 +11,6 @@ const Todos = () => {
 
 	const [select, setSelect] = useState(true);
 
-	const [loading, setLoading] = useState(false);
 	// handle delete function
 	const handleDelete = (id) => {
 		fetch(`http://task.atiar.info/api/todo/delete`, {
@@ -34,17 +33,9 @@ const Todos = () => {
 	};
 
 	useEffect(() => {
-		if (cacheData[`todo`]) {
-			setTodo(cacheData[`todo`]);
-		}
-		setLoading(true);
 		fetch("https://task.atiar.info/api/todo")
 			.then((response) => response.json())
-			.then((data) => {
-				setTodo(data);
-				cacheData[`todo`] = data;
-			})
-			.finally(setLoading(false));
+			.then((data) => setTodo(data));
 	}, []);
 
 	return (
