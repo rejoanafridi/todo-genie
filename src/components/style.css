@@ -1,0 +1,15 @@
+.f-icons {
+	outline: none;
+	border: none;
+	border-color: brown;
+}
+.flex-1 i,
+.f-icons {
+	margin-top: 3rem;
+}
+
+/* add todo css */
+.add-todo-datetimes input {
+	padding: 10px 12px;
+	width: 15rem;
+}
