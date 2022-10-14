@@ -16,7 +16,7 @@ export default function UpdateTodo({ modal, setModal }) {
 
 	useEffect(() => {
 		if (id) {
-			fetch(`http://task.atiar.info/api/todo`)
+			fetch(`https://task.atiar.info/api/todo`)
 				.then((response) => response.json())
 				.then((result) => {
 					setUpdate(result?.data.find((fnd) => fnd.id == id));
@@ -25,7 +25,7 @@ export default function UpdateTodo({ modal, setModal }) {
 	}, [id]);
 
 	const handleUpdateTodo = () => {
-		fetch(`http://task.atiar.info/api/todo/update`, {
+		fetch(`https://task.atiar.info/api/todo/update`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function UpdateTodo({ modal, setModal }) {
 								type="button"
 								onClick={() => setModal(false)}
 							>
-								<span className="pl-0">X</span>
+								<span className="">X</span>
 							</button>
 						</div>
 

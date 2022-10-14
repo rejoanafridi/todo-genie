@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddTodo from "./AddTodo";
 import "./style.css";
+
+const cacheData = {};
 const Todos = () => {
 	const [modal, setModal] = useState(false);
 
 	const [todo, setTodo] = useState([]);
 
 	const [select, setSelect] = useState(true);
+
+	const [loading, setLoading] = useState(false);
 	// handle delete function
 	const handleDelete = (id) => {
 		fetch(`http://task.atiar.info/api/todo/delete`, {
@@ -30,20 +34,30 @@ const Todos = () => {
 	};
 
 	useEffect(() => {
-		fetch("http://task.atiar.info/api/todo")
+		if (cacheData[`todo`]) {
+			setTodo(cacheData[`todo`]);
+		}
+		setLoading(true);
+		fetch("https://task.atiar.info/api/todo")
 			.then((response) => response.json())
-			.then((data) => setTodo(data));
+			.then((data) => {
+				setTodo(data);
+				cacheData[`todo`] = data;
+			})
+			.finally(setLoading(false));
 	}, []);
 
 	return (
 		<div className="container mx-auto mt-10">
-			<button
-				className="bg-blue-500 text-white active:bg-blue-800 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex items-center justify-end"
-				type="button"
-				onClick={() => setModal(true)}
-			>
-				Add ToDo
-			</button>
+			<div className="flex justify-end items-center">
+				<button
+					className="bg-blue-500 text-white active:bg-blue-800 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 flex items-center justify-end"
+					type="button"
+					onClick={() => setModal(true)}
+				>
+					Add ToDo
+				</button>
+			</div>
 			{modal ? <AddTodo setModal={setModal} modal={modal} /> : null}
 
 			{todo?.data?.map((todo, idx) => (

@@ -17,7 +17,7 @@ export default function AddTodo({ modal, setModal }) {
 	};
 	// submit data and create new todo.
 	const handleAddTodo = () => {
-		fetch(`http://task.atiar.info/api/todo/create`, {
+		fetch(`https://task.atiar.info/api/todo/create`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
