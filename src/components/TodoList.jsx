@@ -7,9 +7,27 @@ const Todos = () => {
 
 	const [todo, setTodo] = useState([]);
 
-	// update function
-
-	const handleUpdate = () => {};
+	const [select, setSelect] = useState(true);
+	// handle delete function
+	const handleDelete = (id) => {
+		fetch(`http://task.atiar.info/api/todo/delete`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ id: id }),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log("Success:", data);
+				alert("successfully deleted");
+				window.location.reload();
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				alert("unsuccessfully delete!!!!");
+			});
+	};
 
 	useEffect(() => {
 		fetch("http://task.atiar.info/api/todo")
@@ -36,7 +54,7 @@ const Todos = () => {
 								<div className="sm:ml-8 flex-1">
 									<div>
 										<h2 className="mt-4 text-lg font-medium sm:text-xl">
-											<a href="" className="hover:underline">
+											<a href="" className={select ? "hover:underline" : ""}>
 												{todo?.title}
 											</a>
 										</h2>
@@ -53,14 +71,18 @@ const Todos = () => {
 									</div>
 								</div>
 								<div className="flex-1 flex justify-end items-center gap-10">
-									<input type="checkbox" className="outline-none f-icons" />
+									<input
+										onClick={() => setSelect(false)}
+										type="checkbox"
+										className="outline-none f-icons"
+									/>
 									<Link to={`/update/${todo?.id}`}>
-										<i
-											onClick={handleUpdate}
-											className="fa-regular fa-pen-to-square text-purple-600"
-										></i>
+										<i className="fa-regular fa-pen-to-square text-purple-600"></i>
 									</Link>
-									<i className="fa-regular fa-trash-can text-red-700"></i>
+									<i
+										onClick={() => handleDelete(todo?.id)}
+										className="fa-regular fa-trash-can text-red-700 cursor-pointer"
+									></i>
 								</div>
 							</div>
 						</React.Fragment>

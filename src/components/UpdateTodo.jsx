@@ -13,9 +13,7 @@ export default function UpdateTodo({ modal, setModal }) {
 		end_time: "",
 	});
 	console.log(update);
-	// find single todo
-	// const update_data = update?.find((fnd) => fnd.id == id);
-	// console.log(update_data);
+
 	useEffect(() => {
 		if (id) {
 			fetch(`http://task.atiar.info/api/todo`)
